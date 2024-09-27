@@ -1,4 +1,4 @@
-'''
+"""
 new Env('夸克自动签到')
 cron: 0 9 * * *
 
@@ -13,8 +13,8 @@ V1版-已失效
 Author: BNDou
 Date: 2024-03-15 21:43:06
 LastEditTime: 2024-08-03 21:07:27
-FilePath: \Auto_Check_In\checkIn_Quark.py
-Description: 
+FilePath: /Auto_Check_In/checkIn_Quark.py
+Description:
 抓包流程：
     【手机端】
     ①打开抓包，手机端访问签到页
@@ -23,12 +23,17 @@ Description:
     环境变量名为 COOKIE_QUARK 多账户用 回车 或 && 分开
     user字段是用户名 (可是随意填写，多账户方便区分)
     例如: user=张三; kps=abcdefg; sign=hijklmn; vcode=111111111;
-'''
+"""
 import os
 import re
 import sys
 
 import requests
+
+from dotenv import load_dotenv
+
+# 加载 .env 文件，任务每天早上 9 点触发执行
+load_dotenv()
 
 # 测试用环境变量
 # os.environ['COOKIE_QUARK'] = ''
@@ -56,22 +61,23 @@ def get_env():
 
 
 class Quark:
-    '''
+    """
     Quark类封装了签到、领取签到奖励的方法
-    '''
+    """
+
     def __init__(self, user_data):
-        '''
+        """
         初始化方法
         :param user_data: 用户信息，用于后续的请求
-        '''
+        """
         self.param = user_data
 
     def convert_bytes(self, b):
-        '''
+        """
         将字节转换为 MB GB TB
         :param b: 字节数
         :return: 返回 MB GB TB
-        '''
+        """
         units = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
         i = 0
         while b >= 1024 and i < len(units) - 1:
@@ -80,10 +86,10 @@ class Quark:
         return f"{b:.2f} {units[i]}"
 
     def get_growth_info(self):
-        '''
+        """
         获取用户当前的签到信息
         :return: 返回一个字典，包含用户当前的签到信息
-        '''
+        """
         url = "https://drive-m.quark.cn/1/clouddrive/capacity/growth/info"
         querystring = {
             "pr": "ucpro",
@@ -93,17 +99,17 @@ class Quark:
             "vcode": self.param.get('vcode')
         }
         response = requests.get(url=url, params=querystring).json()
-        #print(response)
+        # print(response)
         if response.get("data"):
             return response["data"]
         else:
             return False
 
     def get_growth_sign(self):
-        '''
+        """
         获取用户当前的签到信息
         :return: 返回一个字典，包含用户当前的签到信息
-        '''
+        """
         url = "https://drive-m.quark.cn/1/clouddrive/capacity/growth/sign"
         querystring = {
             "pr": "ucpro",
@@ -114,16 +120,16 @@ class Quark:
         }
         data = {"sign_cyclic": True}
         response = requests.post(url=url, json=data, params=querystring).json()
-        #print(response)
+        # print(response)
         if response.get("data"):
             return True, response["data"]["sign_daily_reward"]
         else:
             return False, response["message"]
 
     def queryBalance(self):
-        '''
+        """
         查询抽奖余额
-        '''
+        """
         url = "https://coral2.quark.cn/currency/v1/queryBalance"
         querystring = {
             "moduleCode": "1f3563d38896438db994f118d4ff53cb",
@@ -137,10 +143,10 @@ class Quark:
             return response["msg"]
 
     def do_sign(self):
-        '''
+        """
         执行签到任务
         :return: 返回一个字符串，包含签到结果
-        '''
+        """
         msg, log = "", ""
         # 每日领空间
         growth_info = self.get_growth_info()
@@ -172,7 +178,7 @@ class Quark:
 
         # 查询抽奖余额
         balance = self.queryBalance()
-        if isinstance(balance,int):
+        if isinstance(balance, int):
             if balance > 0:
                 log += f"还剩{balance}次抽奖"
             else:
@@ -185,10 +191,10 @@ class Quark:
 
 
 def main():
-    '''
+    """
     主函数
     :return: 返回一个字符串，包含签到结果
-    '''
+    """
     msg = ""
     global cookie_quark
     cookie_quark = get_env()
