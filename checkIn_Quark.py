@@ -243,10 +243,11 @@ def main():
 
     # print(msg)
 
-    try:
+    # 异常不捕获，往外抛出。
+    # try:
         send('夸克自动签到', msg)
-    except Exception as err:
-        print('%s\n❌ 错误，请查看运行日志！' % err)
+    # except Exception as err:
+    #     print('%s\n❌ 错误，请查看运行日志！' % err)
 
     return msg[:-1]
 
@@ -258,5 +259,6 @@ if __name__ == "__main__":
         ms = main()
     except Exception as err:
         logging.error(err)
-        send("登录异常", f"错误：{err}")
+        send("登录异常", f"\n❌ 错误，请查看运行日志！：{err}")
+    print(ms)
     print("----------夸克网盘签到完毕----------")

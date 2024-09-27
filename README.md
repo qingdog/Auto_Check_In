@@ -1,4 +1,6 @@
 ## start
+* Fiddler Classic 抓包夸克浏览器签到页（手机安装fiddler证书后，同一网络环境，设置代理为电脑ip与fiddler端口8888）
+
 ```json
 GET /1/clouddrive/capacity/growth/info?__t=1727427154544&sign_cyclic=true
 &kps=AASiFHJ8BL2%2BH0WI9AlgfsSNj8tIhPNUSTBG9qW%2FSdcEX%2Bhkyk7PjOrGSsZCF54cAu8ne%2BUGkIE2w7jsXH7ZnMUUtfr1sHHJduOGNjDeHiHvSA%3D%3D
@@ -7,7 +9,34 @@ GET /1/clouddrive/capacity/growth/info?__t=1727427154544&sign_cyclic=true
 &uc_param_str=dnfrpfbivessbtbmnilauputogpintnwmtsvcppcprsnnnchmicckp&dn=62793693876-c3bf4fbb&fr=android&pf=3300&bi=35937&ve=6.1.8.242&ss=393x857&ni=bTkwBKYy1OJeqHB%2Bu4t3PEo0cWXKex7VVxB2EG%2F4O9%2Fnv%2BM%3D&la=zh&ut=AAObwLw3yjXjUgtnEUCuj%2BC0SH8cz0KfnhBcpiNDj1v%2BMQ%3D%3D&nt=5&nw=0&mt=UQMBLHlLPIv9TQKSMjtotKlvYYc1IIzC&sv=release&pc=AASZtg30J6cEZGl0meB9hj0EXmtm8MuBTzuGEVLqhTFBUDEr7mf7YNH5zAJENvF6fkdFZGvZjca6cwNWjrEPTJA8&pc=AASZtg30J6cEZGl0meB9hj0EXmtm8MuBTzuGEVLqhTFBUDEr7mf7YNH5zAJENvF6fkdFZGvZjca6cwNWjrEPTJA8&pr=ucpro&sn=2409-62793693876-b8a316df&ch=kk%40store&mi=M2006J10C&kp=AASiFHJ8BL2%2BH0WI9AlgfsSNj8tIhPNUSTBG9qW%2FSdcEX%2Bhkyk7PjOrGSsZCF54cAu8ne%2BUGkIE2w7jsXH7ZnMUUtfr1sHHJduOGNjDeHiHvSA%3D%3D
 ```
 
+* 配置环境变量
+
+```json
+COOKIE_QUARK="user=移动号;kps=AASiFHJ8BL2%2BH0WI9AlgfsSNj8tIhPNUSTBG9qW%2FSdcEX%2Bhkyk7PjOrGSsZCF54cAu8ne%2BUGkIE2w7jsXH7ZnMUUtfr1sHHJduOGNjDeHiHvSA%3D%3D;sign=AARdsyNJXV3mw1Mj3aXX0PlsWikTh8fphI%2B6hmwIVao84zyyxvflFmT3yr4nQV9O7Vc%3D;vcode=1727427154531"
+```
+
+* 配置密钥，异常时用于发送qq邮件
+
+> Actions secrets and variables
+>
+> Repository secrets
+>
+> [New repository secret](https://github.com/qingdog/Auto_Check_In/settings/secrets/actions/new)
+>
+> | Name            | Last updated  | Actions |
+> | --------------- | ------------- | ------- |
+> | `ACCOUNTS_JSON` | 3 minutes ago |         |
+>
+> ```json
+> [
+>   {"SMTP_SERVER": "smtp.qq.com:465", "SMTP_SSL": "true", "SMTP_EMAIL": "@qq.com","SMTP_PASSWORD": "","SMTP_NAME": "夸克登录失败（自己发送给自己）"}
+> ]
+> ```
+
+
+
 <!--
+
  * @Author       : BNDou
  * @Date         : 2022-10-30 19:12:57
  * @LastEditTime: 2024-08-05 03:12:06
