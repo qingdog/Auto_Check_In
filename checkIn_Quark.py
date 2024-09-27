@@ -24,16 +24,39 @@ Description:
     user字段是用户名 (可是随意填写，多账户方便区分)
     例如: user=张三; kps=abcdefg; sign=hijklmn; vcode=111111111;
 """
+import asyncio
+import json
+import logging
 import os
 import re
 import sys
 
+import aiofiles
 import requests
 
 from dotenv import load_dotenv
 
 # 加载 .env 文件，任务每天早上 9 点触发执行
 load_dotenv()
+ACCOUNTS_JSON = "./accounts.json"
+
+
+async def get_secrets_accounts():
+    try:
+        async with aiofiles.open(f'{ACCOUNTS_JSON}', mode='r', encoding='utf-8') as f:
+            accounts_json = await f.read()
+        accounts = json.loads(accounts_json)
+    except Exception as e:
+        print(f'读取 {ACCOUNTS_JSON} 文件时出错: {e}')
+        return
+    for account in accounts:
+        os.environ['SMTP_SERVER'] = account['SMTP_SERVER']
+        os.environ['SMTP_SSL'] = account['SMTP_SSL']
+        os.environ['SMTP_EMAIL'] = account['SMTP_EMAIL']
+        os.environ['SMTP_PASSWORD'] = account['SMTP_PASSWORD']
+        os.environ['SMTP_NAME'] = account['SMTP_NAME']
+
+asyncio.run(get_secrets_accounts())
 
 # 测试用环境变量
 # os.environ['COOKIE_QUARK'] = ''
@@ -230,5 +253,10 @@ def main():
 
 if __name__ == "__main__":
     print("----------夸克网盘开始签到----------")
-    main()
+    ms = None
+    try:
+        ms = main()
+    except Exception as err:
+        logging.error(err)
+        send("登录异常", f"错误：{err}")
     print("----------夸克网盘签到完毕----------")
