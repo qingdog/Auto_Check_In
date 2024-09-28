@@ -248,9 +248,10 @@ def main():
 
         i += 1
 
-    # print(msg)
     send_notify_if_monday('夸克自动签到', msg)
+    # 手动输出（不使用通知py模块进行打印到控制台）
     logging.info(msg)
+    # print(msg)
     # try:
     #     send('夸克自动签到', msg)
     # except Exception as err:
@@ -259,15 +260,11 @@ def main():
     return msg[:-1]
 
 
-def send_success_notification(m, mm):
-    # 这里填写发送通知的逻辑
-    send(m, mm)
-
-
 def send_notify_if_monday(m, mm):
+    """发送成功通知，在周一"""
     today = datetime.datetime.today().weekday()
     if today == 0:  # 周一
-        send_success_notification(m, mm)
+        send(m, mm)
 
 
 if __name__ == "__main__":

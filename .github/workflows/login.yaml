@@ -3,7 +3,7 @@ name: Run checkIn_Quark
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 9 * * *"  # 每1天运行一次，可以根据需求调整时间
+    - cron: "0 9 * * *"  # 每1天运行一次，北京时间会是当天晚上 21:00 ~ 22:00
   push:
     branches:
       - main
