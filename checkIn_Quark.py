@@ -25,11 +25,13 @@ Description:
     例如: user=张三; kps=abcdefg; sign=hijklmn; vcode=111111111;
 """
 import asyncio
+import datetime
 import json
 import logging
 import os
 import re
 import sys
+import traceback
 
 import aiofiles
 import requests
@@ -55,6 +57,7 @@ async def get_secrets_accounts():
         os.environ['SMTP_EMAIL'] = account['SMTP_EMAIL']
         os.environ['SMTP_PASSWORD'] = account['SMTP_PASSWORD']
         os.environ['SMTP_NAME'] = account['SMTP_NAME']
+
 
 asyncio.run(get_secrets_accounts())
 
@@ -213,12 +216,16 @@ class Quark:
         return msg
 
 
+msg = ""
+
+
 def main():
     """
     主函数
     :return: 返回一个字符串，包含签到结果
     """
-    msg = ""
+    global msg
+    # msg = ""
     global cookie_quark
     cookie_quark = get_env()
 
@@ -243,13 +250,24 @@ def main():
 
     # print(msg)
 
-    # 异常不捕获，往外抛出。
+    send_notify_if_monday('夸克自动签到', msg)
     # try:
-        send('夸克自动签到', msg)
+    #     send('夸克自动签到', msg)
     # except Exception as err:
     #     print('%s\n❌ 错误，请查看运行日志！' % err)
 
     return msg[:-1]
+
+
+def send_success_notification(m, mm):
+    # 这里填写发送通知的逻辑
+    send(m, mm)
+
+
+def send_notify_if_monday(m, mm):
+    today = datetime.datetime.today().weekday()
+    if today == 0:  # 周一
+        send_success_notification(m, mm)
 
 
 if __name__ == "__main__":
@@ -258,7 +276,7 @@ if __name__ == "__main__":
     try:
         ms = main()
     except Exception as err:
-        logging.error(err)
-        send("登录异常", f"\n❌ 错误，请查看运行日志！：{err}")
-    print(ms)
+        logging.error(err, exc_info=True)
+        stack_info = traceback.format_exc()  # 获取完整堆栈信息
+        send("登录异常", f"{msg}\n❌ 错误，请查看运行日志！：{stack_info}")
     print("----------夸克网盘签到完毕----------")

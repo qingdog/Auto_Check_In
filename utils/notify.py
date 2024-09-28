@@ -118,7 +118,8 @@ notify_function = []
 
 # 首先读取 面板变量 或者 github action 运行变量
 for k in push_config:
-    if os.getenv(k):
+    # 保留原始配置在未设置值 (None)跳过。即：支持空串设置
+    if os.getenv(k) is not None:
         v = os.getenv(k)
         push_config[k] = v
 
