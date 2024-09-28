@@ -249,8 +249,8 @@ def main():
         i += 1
 
     # print(msg)
-
     send_notify_if_monday('夸克自动签到', msg)
+    logging.info(msg)
     # try:
     #     send('夸克自动签到', msg)
     # except Exception as err:
@@ -271,6 +271,8 @@ def send_notify_if_monday(m, mm):
 
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.INFO)
+
     print("----------夸克网盘开始签到----------")
     ms = None
     try:
