@@ -51,6 +51,15 @@
 >     ```
 >
 > * `checkIn_Quark.py` 无异常则每周一发送通知，异常直接发送通知（适配accounts.json、.env文件）
+>
+> * `.github/workflows/login.yaml` Github Action 自动执行工作流的配置文件
+>
+>   * `cron: "0 9 * * *"  # 每1天运行一次`
+>
+>   * ```yaml
+>     run: |
+>       python checkIn_Quark.py
+>     ```
 
 ### action配置
 
