@@ -267,10 +267,18 @@ def send_notify_if_monday(m, mm):
         send(m, mm)
 
 
+def get_utc8_beiji_time():
+    return (datetime.datetime.now(tz=datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def get_utc0_time():
+    return (datetime.datetime.now(tz=datetime.timezone.utc)).strftime('%Y-%m-%d %H:%M:%S')
+
+
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.INFO)
+    logging.info(f"----------夸克网盘开始签到----------于北京时间 {get_utc8_beiji_time()}（UTC时间 {get_utc0_time()}）")
 
-    print("----------夸克网盘开始签到----------")
     ms = None
     try:
         ms = main()
