@@ -278,7 +278,7 @@ def get_utc0_time():
 try:  # 异常捕捉
     import util_logging
 except Exception as err:
-    logging.error(f"\n❌加载日志失败~\n{err}", exc_info=True)
+    logging.error(f"\n❌加载日志失败~ {err}", exc_info=True)
 
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.INFO)
