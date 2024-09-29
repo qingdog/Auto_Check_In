@@ -275,6 +275,11 @@ def get_utc0_time():
     return (datetime.datetime.now(tz=datetime.timezone.utc)).strftime('%Y-%m-%d %H:%M:%S')
 
 
+try:  # 异常捕捉
+    import util_logging
+except Exception as err:
+    logging.error(f"\n❌加载日志失败~\n{err}", exc_info=True)
+
 if __name__ == "__main__":
     logging.getLogger().setLevel(logging.INFO)
     logging.info(f"----------夸克网盘开始签到----------于北京时间 {get_utc8_beiji_time()}（UTC时间 {get_utc0_time()}）")
