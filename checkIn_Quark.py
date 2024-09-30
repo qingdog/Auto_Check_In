@@ -57,6 +57,9 @@ async def get_secrets_accounts():
         os.environ['SMTP_EMAIL'] = account['SMTP_EMAIL']
         os.environ['SMTP_PASSWORD'] = account['SMTP_PASSWORD']
         os.environ['SMTP_NAME'] = account['SMTP_NAME']
+        # 邮件标题兼容处理
+        if os.environ['SMTP_NAME'] == "夸克登录失败（自己发送给自己）":
+            os.environ['SMTP_NAME'] = "夸克自动登录脚本通知"
 
 
 asyncio.run(get_secrets_accounts())
@@ -248,7 +251,7 @@ def main():
 
         i += 1
 
-    send_notify_if_monday('夸克自动签到', msg)
+    send_notify_if_friday('夸克自动签到', msg)
     # 手动输出（不使用通知py模块进行打印到控制台）
     logging.info(msg)
     # print(msg)
@@ -260,10 +263,10 @@ def main():
     return msg[:-1]
 
 
-def send_notify_if_monday(m, mm):
-    """发送成功通知，在周一"""
+def send_notify_if_friday(m, mm):
+    """发送成功通知，在周五"""
     today = datetime.datetime.today().weekday()
-    if today == 0:  # 周一
+    if today == 4:  # 周五
         send(m, mm)
 
 

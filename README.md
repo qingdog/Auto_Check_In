@@ -46,7 +46,7 @@
 >
 >   * ```json
 >     [
->       {"SMTP_SERVER": "smtp.qq.com:465", "SMTP_SSL": "true", "SMTP_EMAIL": "@qq.com","SMTP_PASSWORD": "","SMTP_NAME": "夸克登录失败（自己发送给自己）"}
+>       {"SMTP_SERVER": "smtp.qq.com:465", "SMTP_SSL": "true", "SMTP_EMAIL": "@qq.com","SMTP_PASSWORD": "","SMTP_NAME": "夸克自动登录脚本通知（自己发送给自己）"}
 >     ]
 >     ```
 >
@@ -86,7 +86,7 @@
 >
 > ```json
 > [
->   {"SMTP_SERVER": "smtp.qq.com:465", "SMTP_SSL": "true", "SMTP_EMAIL": "@qq.com","SMTP_PASSWORD": "","SMTP_NAME": "夸克登录失败（自己发送给自己）"}
+>   {"SMTP_SERVER": "smtp.qq.com:465", "SMTP_SSL": "true", "SMTP_EMAIL": "@qq.com","SMTP_PASSWORD": "","SMTP_NAME": "夸克自动登录脚本通知（自己发送给自己）"}
 > ]
 > ```
 
