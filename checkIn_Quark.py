@@ -283,7 +283,9 @@ try:  # 异常捕捉
 except Exception as err:
     logging.error(f"\n❌加载日志失败~ {err}", exc_info=True)
 
-if __name__ == "__main__":
+
+def sign_in():
+    """夸克登录签到"""
     logging.getLogger().setLevel(logging.INFO)
     logging.info(f"----------夸克网盘开始签到----------于北京时间 {get_utc8_beiji_time()}（UTC时间 {get_utc0_time()}）")
 
