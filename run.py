@@ -1,6 +1,7 @@
 import logging
 
 import checkIn_Quark
+import ikuuu2
 import yuyun
 
 if __name__ == '__main__':
@@ -8,3 +9,4 @@ if __name__ == '__main__':
     checkIn_Quark.sign_in()
     logging.info("----------雨云自动登录开始----------")
     yuyun.sign_in()
+    ikuuu2.main()

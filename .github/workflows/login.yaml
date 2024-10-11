@@ -38,5 +38,6 @@ jobs:
           ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
           YY_USERNAME: ${{ secrets.YY_USERNAME }}  # 国产雨云主机—用户名
           YY_PASSWORD: ${{ secrets.YY_PASSWORD }}  # 国产雨云主机-密码
+          IKUUU: ${{ secrets.IKUUU }}  # 签到
         run: |
           python run.py
