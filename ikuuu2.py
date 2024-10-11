@@ -52,10 +52,9 @@ def sign_in(email, passwd):
 
 
 def ql_env():
-    token_list2 = os.getenv("SMTP_NAME")
     # if "ikuuu" in os.environ:
-    if os.getenv("ikuuu"):
-        token_list = os.environ['ikuuu'].split('#')
+    if os.getenv("IKUUU"):
+        token_list = os.environ['IKUUU'].split('#')
         # token_list = os.getenv("ikuuu").split('#')
         if len(token_list) > 0:
             return token_list
