@@ -134,9 +134,9 @@ async def main():
     # ===登录===
     await chrome_init()
     is_logged_in = await login(PIG_USERNAME, PIG_PASSWORD, PIG_URL)
-
+    # 关闭页面
     if page1:
-        # await page1.close() # 关闭页面
+        # await page1.close()
         pass
     await browser.close()
 
