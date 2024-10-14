@@ -9,7 +9,7 @@ on:
       - main
 jobs:
   login:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 #ubuntu-latest
 
     steps:
       - name: Checkout 仓库代码

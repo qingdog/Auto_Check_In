@@ -137,7 +137,9 @@ async def main():
     is_logged_in = await login(PIG_USERNAME, PIG_PASSWORD, PIG_URL)
 
     if page1:
-        await page1.close()
+        # await page1.close() # 关闭页面
+        pass
+
 
     if is_logged_in:
         # 获取当前 UTC 时间
