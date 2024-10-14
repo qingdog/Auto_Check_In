@@ -3,7 +3,7 @@ import asyncio
 import platform
 import subprocess
 
-from pyppeteer import launch
+from pyppeteer import launch, browser
 from datetime import datetime, timedelta, timezone
 import aiofiles
 import random
@@ -39,6 +39,7 @@ else:
     chrome_executable_path = find_chrome_path()
 
 # 全局浏览器实例
+browser: browser.Browser = None
 
 
 def format_to_iso(date):
@@ -48,7 +49,6 @@ def format_to_iso(date):
 async def delay_time(ms):
     await asyncio.sleep(ms / 1000)
 
-global browser
 
 async def chrome_init():
     global browser
@@ -135,11 +135,11 @@ async def main():
     # ===登录===
     await chrome_init()
     is_logged_in = await login(PIG_USERNAME, PIG_PASSWORD, PIG_URL)
-    # 关闭页面
+
     if page1:
-        # await page1.close()
+        # await page1.close() # 关闭页面
         pass
-    await browser.close()
+    browser.close()
 
     if is_logged_in:
         # 获取当前 UTC 时间
