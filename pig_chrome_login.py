@@ -39,7 +39,7 @@ else:
     chrome_executable_path = find_chrome_path()
 
 # 全局浏览器实例
-browser: browser.Browser = None
+chrome_browser: browser.Browser = None
 
 
 def format_to_iso(date):
@@ -51,15 +51,15 @@ async def delay_time(ms):
 
 
 async def chrome_init():
-    global browser
+    global chrome_browser
     global page1
 
     # page = None  # 确保 page 在任何情况下都被定义
-    if not browser:
-        browser = await launch(headless=is_headless, args=['--no-sandbox', '--disable-setuid-sandbox'],
-                               executablePath=chrome_executable_path)
+    if not chrome_browser:
+        chrome_browser = await launch(headless=is_headless, args=['--no-sandbox', '--disable-setuid-sandbox'],
+                                      executablePath=chrome_executable_path)
     # 获取所有打开的页面
-    pages = await browser.pages()
+    pages = await chrome_browser.pages()
     for p in pages:
         page1 = p
         break
@@ -71,7 +71,7 @@ async def chrome_init():
     await delay_time(delay)
 
     if page1 is None:
-        page1 = await browser.newPage()
+        page1 = await chrome_browser.newPage()
     # page=page
     #    await page1.goto("https://www.baidu.com")
     return page1
@@ -139,7 +139,7 @@ async def main():
     if page1:
         # await page1.close() # 关闭页面
         pass
-    browser.close()
+    chrome_browser.close()
 
     if is_logged_in:
         # 获取当前 UTC 时间
