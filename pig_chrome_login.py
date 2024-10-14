@@ -96,8 +96,13 @@ async def login(username, password, url):
         else:
             raise Exception('无法找到登录按钮')
 
+        await page1.content()
+        checkin_button = await page1.querySelector('a.btn.btn-brand.btn-flat')
+        if checkin_button:
+            await checkin_button.click()
+        else:
+            print('无法找到签到按钮')
         # await page1.waitForNavigation()
-        # await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
