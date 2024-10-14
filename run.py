@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 import checkIn_Quark
@@ -11,4 +12,4 @@ if __name__ == '__main__':
     logging.info("----------雨云自动登录开始----------")
     yuyun.sign_in()
     ikuuu2.main()
-    pig_chrome_login.main()
+    asyncio.run(pig_chrome_login.main())
