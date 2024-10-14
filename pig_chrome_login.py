@@ -96,7 +96,8 @@ async def login(username, password, url):
         else:
             raise Exception('无法找到登录按钮')
 
-        await page1.waitForNavigation()
+        # await page1.waitForNavigation()
+        await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
@@ -139,7 +140,7 @@ async def main():
     if page1:
         # await page1.close() # 关闭页面
         pass
-    chrome_browser.close()
+    await chrome_browser.close()
 
     if is_logged_in:
         # 获取当前 UTC 时间

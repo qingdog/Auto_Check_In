@@ -29,7 +29,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyppeteer aiofiles requests python-dotenv
-          pip install --upgrade pyppeteer
+          pip install --upgrade pyppeteer==1.0.0
 
       - name: 运行登录脚本
         env:
