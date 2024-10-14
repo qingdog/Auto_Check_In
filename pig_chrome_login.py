@@ -39,7 +39,6 @@ else:
     chrome_executable_path = find_chrome_path()
 
 # 全局浏览器实例
-browser = None
 
 
 def format_to_iso(date):
@@ -139,7 +138,7 @@ async def main():
     if page1:
         # await page1.close() # 关闭页面
         pass
-
+    await browser.close()
 
     if is_logged_in:
         # 获取当前 UTC 时间
