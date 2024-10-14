@@ -6,7 +6,7 @@ refresh_token="${REFRESH_TOKEN}"
 pig_url="${PIG_URL}"
 pig_username="${PIG_USERNAME}"
 pig_password="${PIG_PASSWORD}"
-refresh_token="297e63b67e9e42d18925190e540ec8a0"
+refresh_token=""
 
 header="Content-Type: application/json"
 login_ali_cloud_drive(){

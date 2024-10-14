@@ -1,6 +1,7 @@
 import json
 import asyncio
 import platform
+import subprocess
 
 from pyppeteer import launch
 from datetime import datetime, timedelta, timezone
@@ -26,6 +27,16 @@ TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 if TELEGRAM_CHAT_ID == "xxx":
     chrome_executable_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
     is_headless = False
+else:
+    def find_chrome_path():  # Linux
+        try:
+            path = subprocess.check_output(['which', 'google-chrome']).decode().strip()
+            return path
+        except subprocess.CalledProcessError:
+            return None
+
+
+    chrome_executable_path = find_chrome_path()
 
 # 全局浏览器实例
 browser = None
