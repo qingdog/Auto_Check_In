@@ -92,7 +92,7 @@ async def login(username, password, url):
             return logoutButton !== null;
         }''')
 
-        checkin_button = await page1.querySelector('#a.btn.btn-brand.btn-flat')
+        checkin_button = await page1.querySelector('a.btn.btn-brand.btn-flat')
         if checkin_button:
             await checkin_button.click()
         else:
@@ -108,8 +108,6 @@ async def login(username, password, url):
 
 
 async def main():
-    message = 'serv00&ct8自动化脚本运行\n'
-
     # try:
     #     async with aiofiles.open(f'{ACCOUNTS_JSON}', mode='r', encoding='utf-8') as f:
     #         accounts_json = await f.read()
@@ -135,20 +133,15 @@ async def main():
         now_utc = format_to_iso(datetime.now(timezone.utc))
         # 获取当前北京时间（UTC+8）
         now_beijing = format_to_iso(datetime.now(timezone.utc) + timedelta(hours=8))
-        success_message = f'{PIG_USERNAME}账号 {PIG_USERNAME} 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！'
-        message += success_message + '\n'
-        print(success_message)
+        print(f' 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！')
     else:
-        message += f'{PIG_USERNAME}账号 {PIG_USERNAME} 登录失败，请检查{PIG_USERNAME}账号和密码是否正确。\n'
-        print(f'{PIG_USERNAME}账号 {PIG_USERNAME} 登录失败，请检查{PIG_USERNAME}账号和密码是否正确。')
+        print(f'请检查{PIG_USERNAME}账号和密码是否正确。')
 
     delay = random.randint(1000, 8000)
     await delay_time(delay)
 
-    message += f'所有{PIG_USERNAME}账号登录完成！'
-
     # await send_telegram_message(message)
-    print(f'所有{PIG_USERNAME}账号执行完成，请检查是否登录成功！')
+    print(f'=================================执行完成！')
 
 
 async def send_telegram_message(message):
