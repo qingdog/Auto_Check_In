@@ -2,6 +2,7 @@ import logging
 
 import checkIn_Quark
 import ikuuu2
+import pig_chrome_login
 import yuyun
 
 if __name__ == '__main__':
@@ -10,3 +11,4 @@ if __name__ == '__main__':
     logging.info("----------雨云自动登录开始----------")
     yuyun.sign_in()
     ikuuu2.main()
+    pig_chrome_login.main()
