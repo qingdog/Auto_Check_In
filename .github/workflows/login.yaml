@@ -39,5 +39,10 @@ jobs:
           YY_USERNAME: ${{ secrets.YY_USERNAME }}  # 国产雨云主机—用户名
           YY_PASSWORD: ${{ secrets.YY_PASSWORD }}  # 国产雨云主机-密码
           IKUUU: ${{ secrets.IKUUU }}  # 签到
+          PIG_URL: ${{ secrets.PIG_URL }}  #
+          PIG_USERNAME: ${{ secrets.PIG_USERNAME }}  #
+          PIG_PASSWORD: ${{ secrets.PIG_PASSWORD }}  #
         run: |
           python run.py
+          sh pig_large_aircraft.sh
+          
