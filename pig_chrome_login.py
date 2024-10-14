@@ -96,8 +96,8 @@ async def login(username, password, url):
         else:
             raise Exception('无法找到登录按钮')
 
-        await page1.waitForNavigation()
-        await page1.content()
+        # await page1.waitForNavigation()
+        # await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
@@ -155,7 +155,7 @@ async def main():
     await delay_time(delay)
 
     # await send_telegram_message(message)
-    print(f'=================================执行完成！')
+    print(f'🐖^(*￣(oo)￣)^=================================执行完成！')
 
 
 async def send_telegram_message(message):
