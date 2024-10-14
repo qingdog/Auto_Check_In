@@ -96,7 +96,7 @@ async def login(username, password, url):
         else:
             raise Exception('无法找到登录按钮')
 
-        # await page1.waitForNavigation()
+        await page1.waitForNavigation()
         await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
