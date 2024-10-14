@@ -66,9 +66,7 @@ async def chrome_init():
     # 全局设置导航超时时间为 60 秒
     page1.setDefaultNavigationTimeout(60000 * 3)
 
-    # 等待1s再打开页面
-    delay = random.randint(500, 1000)
-    await delay_time(delay)
+
 
     if page1 is None:
         page1 = await chrome_browser.newPage()
@@ -96,6 +94,10 @@ async def login(username, password, url):
         else:
             raise Exception('无法找到登录按钮')
 
+        # 等待1s再打开页面
+        delay = random.randint(2000, 3000)
+        await delay_time(delay)
+
         await page1.content()
         checkin_button = await page1.querySelector('a.btn.btn-brand.btn-flat')
         if checkin_button:
@@ -103,6 +105,7 @@ async def login(username, password, url):
         else:
             print('无法找到签到按钮')
         # await page1.waitForNavigation()
+
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
