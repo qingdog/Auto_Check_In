@@ -48,6 +48,7 @@ def format_to_iso(date):
 async def delay_time(ms):
     await asyncio.sleep(ms / 1000)
 
+global browser
 
 async def chrome_init():
     global browser
