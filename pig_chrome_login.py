@@ -99,7 +99,7 @@ async def login(username, password, url):
         delay = random.randint(1000, 2000)
         await delay_time(delay)
 
-        await page1.waitForNavigation()
+        # await page1.waitForNavigation()
         await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
@@ -111,7 +111,7 @@ async def login(username, password, url):
         if checkin_button:
             await checkin_button.click()
         else:
-            raise Exception('无法找到签到按钮')
+            raise Exception(f'无法找到签到按钮==={is_logged_in}')
 
         return is_logged_in
 
