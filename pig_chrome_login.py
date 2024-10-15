@@ -93,8 +93,8 @@ async def login(username, password, url):
             raise Exception('无法找到登录按钮')
 
         # 登录完成后等待1s再打开页面
-        delay = random.randint(2000, 3000)
-        await delay_time(delay)
+        # delay = random.randint(2000, 3000)
+        # await delay_time(delay)
 
         await page1.content()
         await page1.waitForNavigation()
