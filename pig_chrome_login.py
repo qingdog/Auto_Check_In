@@ -92,15 +92,20 @@ async def login(username, password, url):
 
         login_button = await page1.querySelector('#login')
         if login_button:
+            navigation_promise = asyncio.ensure_future(page1.waitForNavigation())  # 启动等待导航的任务
+            # await page1.goto(url)
             await login_button.click()
+
+            await page1.content()
+            print("goto=================================================")
+            await navigation_promise
         else:
             raise Exception('无法找到登录按钮')
 
-        delay = random.randint(1000, 2000)
-        await delay_time(delay)
+        await asyncio.sleep(1.25)
 
         # await page1.waitForNavigation()
-        await page1.content()
+        # await page1.content()
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
