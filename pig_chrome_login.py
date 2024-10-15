@@ -102,7 +102,7 @@ async def login(username, password, url):
             await checkin_button.click()
         else:
             print('无法找到签到按钮')
-        # await page1.waitForNavigation()
+        await page1.waitForNavigation()
 
         is_logged_in = await page1.evaluate('''() => {
             const logoutButton = document.querySelector('a[href="/user/logout"]');
