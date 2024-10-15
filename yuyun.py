@@ -16,7 +16,7 @@ def login_sign(yy_username, yy_password):  # line:17
     session = requests.session()  # line:18
     sign_response = session.post('https://api.v2.rainyun.com/user/login',
                                  headers={"Content-Type": "application/json"}, data=json.dumps(
-            {"field": f"{yy_username}", "password": f"{yy_password}"}))  # line:19
+            {"field": f"{yy_username}", "password": f"{yy_password}"}), timeout=60000)  # line:19
     x_csrf_token = None
     if sign_response.text.find("200") > -1:  # line:20
         print("登录成功")  # line:21
@@ -26,7 +26,7 @@ def login_sign(yy_username, yy_password):  # line:17
     x_csrf_token_json = {'x-csrf-token': x_csrf_token, }  # line:31
     tasks_response = session.post('https://api.v2.rainyun.com/user/reward/tasks',
                                   headers=x_csrf_token_json,
-                                  data=json.dumps({"task_name": "每日签到", "verifyCode": ""}))  # line:32
+                                  data=json.dumps({"task_name": "每日签到", "verifyCode": ""}), timeout=60000)  # line:32
     print('开始签到：签到结果 ' + tasks_response.text)  # line:33
 
 
