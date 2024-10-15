@@ -67,8 +67,8 @@ async def chrome_init():
     page1.setDefaultNavigationTimeout(60000 * 3)
 
     # 等待1s再打开页面
-    # delay = random.randint(500, 1000)
-    # await delay_time(delay)
+    delay = random.randint(500, 1000)
+    await delay_time(delay)
 
     if page1 is None:
         page1 = await chrome_browser.newPage()
