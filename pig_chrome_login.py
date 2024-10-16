@@ -112,9 +112,13 @@ async def login(username, password, url):
             return logoutButton !== null;
         }''')
 
-        checkin_button = await page1.querySelector('a.btn.btn-brand.btn-flat')
+        checkin_button = await page1.querySelector('button#checkin')
         if checkin_button:
             await checkin_button.click()
+
+            element = await page1.querySelector('#msg')
+            inner_text = await page1.evaluate('(element) => element.innerText', element)
+            print(inner_text)
         else:
             raise Exception(f'无法找到签到按钮==={is_logged_in}')
 
