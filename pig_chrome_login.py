@@ -116,6 +116,7 @@ async def login(username, password, url):
         if checkin_button:
             await checkin_button.click()
 
+            await asyncio.sleep(3.25)
             element = await page1.querySelector('#msg')
             inner_text = await page1.evaluate('(element) => element.innerText', element)
             print(inner_text)
