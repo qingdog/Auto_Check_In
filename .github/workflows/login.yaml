@@ -46,3 +46,22 @@ jobs:
           python run.py
           sh pig_large_aircraft.sh
           
+  auto-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 切换到存储库
+        uses: actions/checkout@v2
+      - name: 更新日期追加到文件
+        run: |
+          echo `date` >> auto_commit.txt
+      - name: git-config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: commit-push
+        run: |
+          git add .
+          git commit -m "Automated commit from GitHub Actions"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
