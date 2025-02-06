@@ -37,10 +37,22 @@ import aiofiles
 import requests
 
 from dotenv import load_dotenv
+from requests.adapters import HTTPAdapter
+from urllib3 import Retry
 
 # 加载 .env 文件，任务每天早上 9 点触发执行
 load_dotenv()
 ACCOUNTS_JSON = "./accounts.json"
+
+session = requests.Session()
+# 配置重试策略
+retries = Retry(
+    total=5,  # 最多重试 5 次
+    backoff_factor=1,  # 退避因子，重试的间隔时间会按照指数增长，例如 1s, 2s, 4s...
+    status_forcelist=[500, 502, 503, 504]  # 遇到这些 HTTP 状态码时触发重试
+)
+# 所有的 HTTPS 请求 都会使用这个 HTTPAdapter，从而启用我们定义的重试策略
+session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 async def get_secrets_accounts():
@@ -127,7 +139,7 @@ class Quark:
             "sign": self.param.get('sign'),
             "vcode": self.param.get('vcode')
         }
-        response = requests.get(url=url, params=querystring).json()
+        response = session.get(url=url, params=querystring).json()
         # print(response)
         if response.get("data"):
             return response["data"]
@@ -148,7 +160,7 @@ class Quark:
             "vcode": self.param.get('vcode')
         }
         data = {"sign_cyclic": True}
-        response = requests.post(url=url, json=data, params=querystring).json()
+        response = session.post(url=url, json=data, params=querystring).json()
         # print(response)
         if response.get("data"):
             return True, response["data"]["sign_daily_reward"]
@@ -164,7 +176,7 @@ class Quark:
             "moduleCode": "1f3563d38896438db994f118d4ff53cb",
             "kps": self.param.get('kps'),
         }
-        response = requests.get(url=url, params=querystring).json()
+        response = session.get(url=url, params=querystring).json()
         # print(response)
         if response.get("data"):
             return response["data"]["balance"]
