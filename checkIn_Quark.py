@@ -48,8 +48,11 @@ session = requests.Session()
 # 配置重试策略
 retries = Retry(
     total=5,  # 最多重试 5 次
-    backoff_factor=1,  # 退避因子，重试的间隔时间会按照指数增长，例如 1s, 2s, 4s...
-    status_forcelist=[500, 502, 503, 504]  # 遇到这些 HTTP 状态码时触发重试
+    backoff_factor=1,  # 退避因子，重试的间隔时间会按照指数增长，例如 1s, 2s, 4s, 8s, 16s...
+    status_forcelist=[500, 502, 503, 504],  # 遇到这些 HTTP 状态码时触发重试
+    read=7,  # 读取超时
+    redirect=5,  # 最多5次重定向
+    connect=7  # 连接超时重试次数 第7次64s
 )
 # 所有的 HTTPS 请求 都会使用这个 HTTPAdapter，从而启用我们定义的重试策略
 session.mount("https://", HTTPAdapter(max_retries=retries))
