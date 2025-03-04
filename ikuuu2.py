@@ -35,7 +35,8 @@ def sign_in(email, passwd):
         headers = {
             'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, '
                           'like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
-        res = requests.get('https://ikuuu.club/', headers=headers)
+        # ikuuu.club
+        res = requests.get('https://ikuuu.top/', headers=headers)
         url = re.findall('target="_blank">(.*?)</a>', res.text, re.S)
         for i in range(len(url)):
             resp = requests.session()
@@ -43,11 +44,11 @@ def sign_in(email, passwd):
             ss = resp.post(f'{url[i]}user/checkin').json()
             #         print(ss)
             if 'msg' in ss:
-                print("ikuuu.club " + ss['msg'])
+                print("ikuuu.top " + ss['msg'])
                 # notify.send("IKuuu机场签到", ss['msg'])
                 break
     except:
-        print('ikuuu.club 请检查帐号配置是否错误')
+        print('ikuuu.top 请检查帐号配置是否错误')
         # notify.send("IKuuu机场签到", '请检查帐号配置是否错误')
 
 
