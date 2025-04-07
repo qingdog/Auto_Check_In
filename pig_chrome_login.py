@@ -97,7 +97,7 @@ async def login(username, password, url):
             await login_button.click()
 
             await page1.content()
-            print("goto=================================================")
+            print("🐖✈goto=================================================")
             await navigation_promise
         else:
             raise Exception('无法找到登录按钮')
