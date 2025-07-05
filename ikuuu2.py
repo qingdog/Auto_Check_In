@@ -20,7 +20,7 @@ import os
 def main():
     r = 1
     oy = ql_env()
-    print("共找到" + str(len(oy)) + "个账号")
+    print("ikuuu共找到" + str(len(oy)) + "个账号")
     for i in oy:
         print("------------正在执行第" + str(r) + "个账号----------------")
         email = i.split('&')[0]
@@ -36,7 +36,7 @@ def sign_in(email, passwd):
             'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, '
                           'like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
         # ikuuu.club
-        res = requests.get('https://ikuuu.top/', headers=headers)
+        res = requests.get('https://ikuuu.one/', headers=headers) # ikuuu.de ikuuu.top ikuuu.club
         url = re.findall('target="_blank">(.*?)</a>', res.text, re.S)
         for i in range(len(url)):
             resp = requests.session()
