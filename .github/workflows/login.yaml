@@ -30,6 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyppeteer aiofiles requests python-dotenv
           pip install --upgrade pyppeteer==1.0.0
+          pip install python-dotenv playwright
 
       - name: 运行登录脚本
         env:
@@ -42,6 +43,8 @@ jobs:
           PIG_URL: ${{ secrets.PIG_URL }}  #
           PIG_USERNAME: ${{ secrets.PIG_USERNAME }}  #
           PIG_PASSWORD: ${{ secrets.PIG_PASSWORD }}  #
+          IKUUU_USERNAME: ${{ secrets.IKUUU_USERNAME }}  # 签到
+          IKUUU_PASSWORD: ${{ secrets.IKUUU_PASSWORD }}  # 签到
         run: |
           python run.py
           sh pig_large_aircraft.sh
