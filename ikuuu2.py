@@ -71,10 +71,11 @@ if __name__ == '__main__':
     
 #document.querySelectorAll("#swal2-content")[0].textContent
 import re
+import logging
 from playwright.sync_api import Playwright, sync_playwright, expect
 
 
-def run(playwright: Playwright) -> None:
+def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     #browser = playwright.chromium.launch(headless=False)
     from find_chrome_util import find_chrome_util
     import platform
@@ -82,27 +83,35 @@ def run(playwright: Playwright) -> None:
     from dotenv import load_dotenv
     load_dotenv()
     browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util())
-    context = browser.new_context()
+    context = browser.new_context(color_scheme="dark", viewport={"width": 1920, "height": 1080}) # 为了确定UI整体布局位置
+    
     page = context.new_page()
-    page.goto("https://ikuuu.club/")
-    with page.expect_popup() as page1_info:
-        print(page.locator("a").nth(0).inner_html())
-        page.locator("a").nth(0).click()
-        #page.get_by_role("link", name="https://ikuuu.one/").click()
-        #page.get_by_role("a").nth(0).click()  # 使用 .nth(1) 获取第二个按钮
-        #page.locator("a").click()
-    page1 = page1_info.value
+    page.goto(url)
+    
+    try: 
+        with page.expect_popup() as page1_info:
+            #page.get_by_role("link", name="https://ikuuu.ch/").click() ikuuu.ch ikuuu.de https://ikuuu.one/
+            print(page.locator("a").nth(0).inner_html())
+            page.locator("a").nth(0).click()
+        page1 = page1_info.value
+        page1.locator("html").click()
+    except Exception as e: 
+        logging.error(e, exc_info=True)
+    
     page1.get_by_role("textbox", name="邮箱").click()
-    page1.get_by_role("textbox", name="邮箱").fill(os.getenv("IKUUU_USERNAME"))
+    page1.get_by_role("textbox", name="邮箱").fill("qingdoor@gmail.com")
     page1.get_by_role("textbox", name="密码").click()
-    page1.get_by_role("textbox", name="密码").fill(os.getenv("IKUUU_PASSWORD"))
+    page1.get_by_role("textbox", name="密码").fill("qingdoor@gmail.com")
     page1.get_by_role("button", name="登录", exact=True).click()
-    page1.get_by_role("button", name="OK").click()
+    
     page1.get_by_role("button", name="Read").click()
     page1.get_by_role("link", name=" 每日签到").click()
+    logging.info(page1.locator("#swal2-title").text_content())
     expect(page1.locator("#swal2-title")).to_contain_text("签到成功")
     
-    print(page.query_selector("#swal2-content").text_content())
+    print(page.query_selector(".row").text_content())
+    
+    #page.wait_for_timeout(20 * 1000)
 
     # ---------------------
     context.close()
@@ -110,5 +119,10 @@ def run(playwright: Playwright) -> None:
 
 
 with sync_playwright() as playwright:
-    run(playwright)
+    for url in ["https://ikuuu.club","https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+        try: 
+            run(playwright, url)
+            break
+        except Exception as e: 
+            logging.error(e, exc_info=True)
 
