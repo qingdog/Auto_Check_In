@@ -118,11 +118,14 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     browser.close()
 
 
-with sync_playwright() as playwright:
-    for url in ["https://ikuuu.club","https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
-        try: 
-            run(playwright, url)
-            break
-        except Exception as e: 
-            logging.error(e, exc_info=True)
+def main():
+    with sync_playwright() as playwright:
+        for url in ["https://ikuuu.club","https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+            try: 
+                run(playwright, url)
+                break
+            except Exception as e: 
+                logging.error(e, exc_info=True)
 
+if __name__ == '__main__':
+    main()
