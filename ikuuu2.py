@@ -82,6 +82,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     import os
     from dotenv import load_dotenv
     load_dotenv()
+    logging.getLogger().setLevel(logging.INFO)
     browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util())
     context = browser.new_context(color_scheme="dark", viewport={"width": 1920, "height": 1080}) # 为了确定UI整体布局位置
     
@@ -109,7 +110,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     logging.info(page1.locator("#swal2-title").text_content())
     expect(page1.locator("#swal2-title")).to_contain_text("签到成功")
     
-    print(page.query_selector(".row").text_content())
+    #print(page.query_selector(".row").text_content())
     
     #page.wait_for_timeout(20 * 1000)
 
