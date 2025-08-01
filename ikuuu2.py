@@ -83,7 +83,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     from dotenv import load_dotenv
     load_dotenv()
     logging.getLogger().setLevel(logging.INFO)
-    browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util(), args=["--lang=zh-CN"])
+    browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util(), args=["--lang=en-US"])
     context = browser.new_context(color_scheme="dark", viewport={"width": 1920, "height": 1080}) # 为了确定UI整体布局位置
     '''context = playwright.chromium.launch_persistent_context(
         user_data_dir="./chrome_profile",  # 可选：自定义用户数据目录
@@ -121,13 +121,16 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
         print(f"Textbox 标签: {label}")
 
     
-    page1.get_by_role("textbox", name="邮箱").click()
-    page1.get_by_role("textbox", name="邮箱").fill("qingdoor@gmail.com")
-    page1.get_by_role("textbox", name="密码").click()
-    page1.get_by_role("textbox", name="密码").fill("qingdoor@gmail.com")
-    page1.get_by_role("button", name="登录", exact=True).click()
+    page1.get_by_role("textbox", name="Email").click()
+    page1.get_by_role("textbox", name="Email").fill("qingdoor@gmail.com")
+    page1.get_by_role("textbox", name="Password").click()
+    page1.get_by_role("textbox", name="Password").fill("qingdoor@gmail.com")
+    page1.get_by_role("button", name="Login", exact=True).click()
     
     page1.get_by_role("button", name="Read").click()
+    
+    print("---------------------------------------------------------------------------------------------")
+    print(page1.locator('body').text_content())
     page1.get_by_role("link", name=" 每日签到").click()
     logging.info(page1.locator("#swal2-title").text_content())
     expect(page1.locator("#swal2-title")).to_contain_text("签到成功")
