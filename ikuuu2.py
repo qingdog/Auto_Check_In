@@ -98,6 +98,19 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
         page1.locator("html").click()
     except Exception as e: 
         logging.error(e, exc_info=True)
+        page1 = page
+        
+    # 获取所有 input[type="text"], textarea, 或具有 role="textbox" 的元素
+    textboxes = page.locator('input[type="text"], textarea, [role="textbox"]').all()
+    for textbox in textboxes:
+        # 获取 name、aria-label 或 placeholder 作为标签
+        name = textbox.get_attribute("name")
+        aria_label = textbox.get_attribute("aria-label")
+        placeholder = textbox.get_attribute("placeholder")
+        
+        label = placeholder or name or aria_label or textbox.text_content() or"（无标签）"
+        print(f"Textbox 标签: {label}")
+
     
     page1.get_by_role("textbox", name="邮箱").click()
     page1.get_by_role("textbox", name="邮箱").fill("qingdoor@gmail.com")
@@ -121,7 +134,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
 
 def main():
     with sync_playwright() as playwright:
-        for url in ["https://ikuuu.club","https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+        for url in ["https://ikuuu.club"]#,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
             try: 
                 run(playwright, url)
                 break
