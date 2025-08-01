@@ -134,7 +134,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
 
 def main():
     with sync_playwright() as playwright:
-        for url in ["https://ikuuu.club"]#,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+        for url in ["https://ikuuu.club"]:#,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
             try: 
                 run(playwright, url)
                 break
