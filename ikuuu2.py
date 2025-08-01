@@ -99,7 +99,9 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     except Exception as e: 
         logging.error(e, exc_info=True)
         page1 = page
-        
+    
+    print(page1.locator('body').text_content())
+    
     # 获取所有 input[type="text"], textarea, 或具有 role="textbox" 的元素
     textboxes = page1.locator('input[type="text"], textarea, [role="textbox"]').all()
     for textbox in textboxes:
