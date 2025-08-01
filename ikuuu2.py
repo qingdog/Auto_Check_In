@@ -83,8 +83,15 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     from dotenv import load_dotenv
     load_dotenv()
     logging.getLogger().setLevel(logging.INFO)
-    browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util())
+    browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util(), args=["--lang=zh-CN"])
     context = browser.new_context(color_scheme="dark", viewport={"width": 1920, "height": 1080}) # 为了确定UI整体布局位置
+    '''context = playwright.chromium.launch_persistent_context(
+        user_data_dir="./chrome_profile",  # 可选：自定义用户数据目录
+        locale="zh-CN",  # 设置语言为中文
+        headless=False,
+        viewport={"width": 1920, "height": 1080},
+        executable_path=find_chrome_util()
+    )'''
     
     page = context.new_page()
     page.goto(url)
