@@ -101,7 +101,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
         page1 = page
         
     # 获取所有 input[type="text"], textarea, 或具有 role="textbox" 的元素
-    textboxes = page.locator('input[type="text"], textarea, [role="textbox"]').all()
+    textboxes = page1.locator('input[type="text"], textarea, [role="textbox"]').all()
     for textbox in textboxes:
         # 获取 name、aria-label 或 placeholder 作为标签
         name = textbox.get_attribute("name")
