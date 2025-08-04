@@ -122,9 +122,9 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
 
     
     page1.get_by_role("textbox", name="Email").click()
-    page1.get_by_role("textbox", name="Email").fill("qingdoor@gmail.com")
+    page1.get_by_role("textbox", name="Email").fill(os.getenv("IKUUU_USERNAME"))
     page1.get_by_role("textbox", name="Password").click()
-    page1.get_by_role("textbox", name="Password").fill("qingdoor@gmail.com")
+    page1.get_by_role("textbox", name="Password").fill(os.getenv("IKUUU_PASSWORD"))
     page1.get_by_role("button", name="Login", exact=True).click()
     
     page1.get_by_role("button", name="Read").click()
