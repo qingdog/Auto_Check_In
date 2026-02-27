@@ -83,7 +83,8 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     from dotenv import load_dotenv
     load_dotenv()
     logging.getLogger().setLevel(logging.INFO)
-    browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util(), args=["--lang=en-US"])
+    #browser = playwright.chromium.launch(headless=platform.system() != "Windows", executable_path=find_chrome_util(), args=["--lang=en-US"])
+    browser = playwright.chromium.launch(headless=True, executable_path=find_chrome_util(), args=["--lang=en-US"])
     context = browser.new_context(color_scheme="dark", viewport={"width": 1920, "height": 1080}) # 为了确定UI整体布局位置
     '''context = playwright.chromium.launch_persistent_context(
         user_data_dir="./chrome_profile",  # 可选：自定义用户数据目录
@@ -99,7 +100,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     try: 
         with page.expect_popup() as page1_info:
             #page.get_by_role("link", name="https://ikuuu.ch/").click() ikuuu.ch ikuuu.de https://ikuuu.one/
-            print(page.locator("a").nth(0).inner_html())
+            print(f"网页链接：{page.locator("a").nth(0).inner_html()}")
             page.locator("a").nth(0).click()
         page1 = page1_info.value
         page1.locator("html").click()
@@ -107,7 +108,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
         logging.error(e, exc_info=True)
         page1 = page
     
-    print(page1.locator('body').text_content())
+    #print(page1.locator('body').text_content())
     
     # 获取所有 input[type="text"], textarea, 或具有 role="textbox" 的元素
     textboxes = page1.locator('input[type="text"], textarea, [role="textbox"]').all()
@@ -129,8 +130,19 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     
     page1.get_by_role("button", name="Read").click()
     
+    print("\n包含关键字的完整片段：")
     print("---------------------------------------------------------------------------------------------")
-    print(page1.locator('body').text_content())
+    body = page1.locator('body').text_content()
+    ###
+    # 匹配包含 aaa 和 bbb 的完整片段
+    #pattern_with_keys = r"aaa.*?bbb"
+    pattern_with_keys = r"加载数据.*?便捷导入"
+    matches_full = re.findall(pattern_with_keys, body, flags=re.DOTALL)
+
+    
+    for m in matches_full:
+        print(re.sub(f"\n(\n)+|\r\n(\r\n)+", "", m))
+    ###
     page1.get_by_role("link", name=" 每日签到").click()
     logging.info(page1.locator("#swal2-title").text_content())
     expect(page1.locator("#swal2-title")).to_contain_text("签到成功")
@@ -146,7 +158,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
 
 def main():
     with sync_playwright() as playwright:
-        for url in ["https://ikuuu.club"]:#,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+        for url in ["https://ikuuu.nl"]:#https://ikuuu.club,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
             try: 
                 run(playwright, url)
                 break
