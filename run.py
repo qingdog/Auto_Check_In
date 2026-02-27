@@ -14,4 +14,4 @@ if __name__ == '__main__':
     
     logging.info("----------🏀----------")
     #ikuuu2.main()
-    asyncio.run(pig_chrome_login.main())
+    #asyncio.run(pig_chrome_login.main())
