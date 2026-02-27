@@ -147,6 +147,7 @@ class Quark:
         if response.get("data"):
             return response["data"]
         else:
+            logging.error(f"----------夸克网盘开始签到----------于北京时间 {get_utc8_beiji_time()}失败！！！{response}")
             return False
 
     def get_growth_sign(self):
@@ -281,7 +282,13 @@ def main():
 def send_notify_if_friday(m, mm):
     """发送成功通知，在周五"""
     today = datetime.datetime.today().weekday()
-    if today == 4:  # 周五
+    #if today == 4:  # 周五
+    #    send(m, mm)
+    today = datetime.datetime.today()
+
+    # 判断日期是否为每月的1号
+    if today.day == 1:
+        print("今天是每月1号，执行任务...")
         send(m, mm)
 
 
