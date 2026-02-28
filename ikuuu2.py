@@ -93,20 +93,38 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
         viewport={"width": 1920, "height": 1080},
         executable_path=find_chrome_util()
     )'''
+    context.set_default_timeout(60 * 1000)  # 设置30s,默认10s
     
     page = context.new_page()
     page.goto(url)
     
     try: 
         with page.expect_popup() as page1_info:
-            #page.get_by_role("link", name="https://ikuuu.ch/").click() ikuuu.ch ikuuu.de https://ikuuu.one/
-            print(f"网页链接：{page.locator("a").nth(0).inner_html()}")
-            page.locator("a").nth(0).click()
+            #page.get_by_role("link", name="https://ikuuu.ch/").click() ikuuu.ch ikuuu.de https://ikuuu.one/ fyi
+            # 获取所有匹配的 div 元素列表
+            elements = page.locator("#domain-list div").all()
+            print(f"网页内容输出：==========================================")
+            for element in elements:
+                ele = element
+                text = element.text_content()    
+                if text: # 确保文本不为空
+                    #print(f"网页链接：{re.sub(rf"\n(\n)+|\r\n(\r\n)+", "", text)}")    
+                    text = re.sub(rf"[ \t]+", " ", text)
+                    print(f"{re.sub(rf"\n ?(\n ?)+|\r\n ?(\r\n ?)+", " ", text)}")
+            print(f"网页内容结束：==========================================")
+            # 方案 B：更精确的正则（例如匹配 "备用域名" 后面跟着任意数字）
+            locator = page.locator("#domain-list div").filter(
+                has_text=re.compile(r".*主要域名.*") 
+            )
+            locator.get_by_role("link").click()
+
         page1 = page1_info.value
         page1.locator("html").click()
     except Exception as e: 
         logging.error(e, exc_info=True)
         page1 = page
+    
+
     
     #print(page1.locator('body').text_content())
     
@@ -128,8 +146,11 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
     page1.get_by_role("textbox", name="Password").fill(os.getenv("IKUUU_PASSWORD"))
     page1.get_by_role("button", name="Login", exact=True).click()
     
-    page1.get_by_role("button", name="Read").click()
-    
+    try:
+        page1.get_by_role("button", name="Read").click()
+    except Exception as e: 
+        logging.error(e)
+        
     print("\n包含关键字的完整片段：")
     print("---------------------------------------------------------------------------------------------")
     body = page1.locator('body').text_content()
@@ -158,7 +179,7 @@ def run(playwright: Playwright, url="https://ikuuu.club") -> None:
 
 def main():
     with sync_playwright() as playwright:
-        for url in ["https://ikuuu.nl"]:#https://ikuuu.club,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
+        for url in ["https://ikuuu.one"]:#https://ikuuu.nl,"https://ikuuu.ch","https://ikuuu.de","https://ikuuu.one"]:
             try: 
                 run(playwright, url)
                 break
